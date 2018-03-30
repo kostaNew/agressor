@@ -1,6 +1,8 @@
 import os
 
 from agressor.abc import ResourceManager
+from agressor.state import is_lock, is_ready
+
 
 class DataPackageResourceManager(ResourceManager):
 
@@ -20,4 +22,5 @@ class DataPackageResourceManager(ResourceManager):
 
     def provide(self):
         for f in self.folders:
-            yield os.path.abspath(f)
+            if not is_lock(f) and is_ready(f):
+                yield os.path.abspath(f)

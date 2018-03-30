@@ -33,6 +33,5 @@ class Agressor(BaseAgressor, DataPackageMixin):
         return True
 
     def process(self):
-        os.makedirs(self.folder_out, exist_ok=True)
         shutil.copy(os.path.join(self.folder_in, FILE_TXT), os.path.join(self.folder_out, FILE_TXT))
         return True

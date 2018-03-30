@@ -37,5 +37,7 @@ class MyTestCase(unittest.TestCase):
         main_manager.register_resource_manager(dprm)
         main_manager.process_once()
 
+        self.assertTrue(os.path.exists('../data/pipeline1/case1/s200_statistics/agro-ready'))
+
 if __name__ == '__main__':
     unittest.main()

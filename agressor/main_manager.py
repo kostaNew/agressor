@@ -1,5 +1,6 @@
 import os
 
+from agressor import state
 from agressor.abc import *
 
 FILE_AGRO_READY = '.agro_ready'
@@ -31,11 +32,20 @@ class MainManager:
                             config = {}
                             config['folder_in'] = folder_in
                             config['folder_out'] = folder_out
-                            agro.initialize(config)
+                            if not state.is_lock(folder_in) and state.is_ready(folder_in):
+                                agro.initialize(config)
 
-                            if agro.look():
-                                if agro.validate():
-                                    agro.process()
+                                if agro.look():
+                                    if agro.validate():
+                                        try:
+                                            os.makedirs(folder_out, exist_ok=True)
+                                            state.make_process(folder_out)
+                                            if agro.process():
+                                                state.make_ready(folder_out)
+                                            else:
+                                                pass
+                                        except:
+                                            pass
 
 
 
